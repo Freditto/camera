@@ -26,7 +26,6 @@ class _HomeScreenState extends State<HomeScreen> {
         // uploadImage();
 
         GallerySaver.saveImage(_imagepath!);
-        
       } else {
         print("No image is selected.");
       }
@@ -35,13 +34,96 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  _openGallery() {
+
+  }
+
+  _chooseDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Choose'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Row(
+                  // Number of columns in the grid
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        openCamera();
+                      },
+                      child: const Card(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20.0, vertical: 20),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.camera_alt,
+                                size: 50,
+                              ), // Replace 'icon_name_3' with the desired icon
+                              SizedBox(height: 8),
+                              Text(
+                                'Camera',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        _openGallery();
+                      },
+                      child: const Card(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20.0, vertical: 20),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.photo,
+                                size: 50,
+                              ), // Replace 'icon_name_3' with the desired icon
+                              SizedBox(height: 8),
+                              Text(
+                                'Gallery',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.camera),
+          child: Icon(Icons.menu),
           onPressed: () {
-            openCamera();
+            _chooseDialog(context);
           }),
     );
   }
