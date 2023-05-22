@@ -65,6 +65,8 @@ class DBHelper {
     return await db.delete('images', where: 'id = ?', whereArgs: [id]);
   }
 
+  
+
   // Future<List<Map<String, dynamic>>> getHistory(String type) async {
   //   final db = await database;
   //   return await db

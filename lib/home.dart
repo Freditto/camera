@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:camera/gallery.dart';
+import 'package:camera/helper/database.dart';
 import 'package:flutter/material.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:image_picker/image_picker.dart';
@@ -26,6 +30,11 @@ class _HomeScreenState extends State<HomeScreen> {
         // uploadImage();
 
         GallerySaver.saveImage(_imagepath!);
+
+        final dbHelper = DBHelper();
+        var data = {"path": _imagepath!, "is_favourite": false};
+        final historydata = await dbHelper.insertImages(data);
+        
       } else {
         print("No image is selected.");
       }
@@ -34,10 +43,9 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  _openGallery() {
+  
 
-  }
-
+  
   _chooseDialog(BuildContext context) {
     showDialog(
         context: context,
@@ -82,7 +90,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     InkWell(
                       onTap: () {
-                        _openGallery();
+                        
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => GalleryPage()),
+                        );
                       },
                       child: const Card(
                         child: Padding(

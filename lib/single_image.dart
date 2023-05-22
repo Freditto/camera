@@ -15,7 +15,7 @@ class SingleImagePage extends StatefulWidget {
 
 class _SingleImagePageState extends State<SingleImagePage> {
 
-  _deleteImageDialog(BuildContext context, int id) {
+  _deleteImageDialog(BuildContext context, int id, String path) {
     showDialog(
         context: context,
         builder: (context) {
@@ -44,6 +44,12 @@ class _SingleImagePageState extends State<SingleImagePage> {
                           onTap: () async {
                             // _deleteSingleProductTocart(index);
                             // logOUT_User();
+                                    final dbHelper = DBHelper();
+                                    final imagesData =
+                                        await dbHelper.deleteImage(id);
+                            deleteImage(path);
+
+                            Navigator.of(context).pop();
                             
                           },
                           child: const Text('Yes')),
@@ -66,6 +72,21 @@ class _SingleImagePageState extends State<SingleImagePage> {
           );
         });
   }
+
+  void deleteImage(String imagePath) async {
+    try {
+      final file = File(imagePath);
+      if (await file.exists()) {
+        await file.delete();
+        print('Image deleted successfully');
+      } else {
+        print('Image not found');
+      }
+    } catch (e) {
+      print('Failed to delete image: $e');
+    }
+  }
+
 
 
   
@@ -100,7 +121,7 @@ class _SingleImagePageState extends State<SingleImagePage> {
 
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _deleteImageDialog(context, widget.id);
+          _deleteImageDialog(context, widget.id, widget.imageUrl.path);
         },
         child: Icon(Icons.delete_outline),
         backgroundColor: Colors.amberAccent,
