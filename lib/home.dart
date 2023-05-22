@@ -133,6 +133,16 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      body: Container(
+      decoration: const BoxDecoration(
+        // color: AppColor.defaultcard,
+        image: DecorationImage(
+            image: AssetImage("assets/bgx.png"),
+            // image: NetworkImage(
+            // "https://images.pexels.com/photos/5208356/pexels-photo-5208356.jpeg?auto=compress&cs=tinysrgb&w=1600"),
+            fit: BoxFit.cover),
+        // Fit(),
+      )),
       floatingActionButton: FloatingActionButton(
           child: Icon(Icons.menu),
           onPressed: () {
